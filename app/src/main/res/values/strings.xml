@@ -8,4 +8,6 @@
     <string name="error">Error</string>
     <string name="dog_index_format">Dog %d</string>
     <string name="dog_life_expectancy_format">%s years</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

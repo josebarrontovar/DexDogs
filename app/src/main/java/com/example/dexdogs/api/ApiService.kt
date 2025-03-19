@@ -2,8 +2,6 @@ package com.example.dexdogs.api
 
 import com.example.dexdogs.BASE_URL
 import com.example.dexdogs.api.responses.DogListApiResponse
-import com.example.dexdogs.api.responses.DogListResponse
-import com.example.dexdogs.model.Dog
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET

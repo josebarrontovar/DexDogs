@@ -32,13 +32,13 @@ class DogListActivity : AppCompatActivity() {
         val activityDogListBinding = ActivityDogListBinding.inflate(layoutInflater)
         setContentView(activityDogListBinding.root)
 
-        val loadingWheel=activityDogListBinding.loadingWheel
-        val recycler= activityDogListBinding.dogRecycler
+        val loadingWheel = activityDogListBinding.loadingWheel
+        val recycler = activityDogListBinding.dogRecycler
         recycler.layoutManager = LinearLayoutManager(this)
 
         val adapter = DogAdapter()
 
-        adapter.setOnItemClick ({
+        adapter.setOnItemClick({
             val intent = Intent(this, DogDetailActivity::class.java)
             intent.putExtra(DOG_EXTRA, it)
             startActivity(intent)
@@ -46,22 +46,18 @@ class DogListActivity : AppCompatActivity() {
 
         recycler.adapter = adapter
 
-        dogViewModel.dogList.observe(this){
+        dogViewModel.dogList.observe(this) {
             adapter.submitList(it)
         }
 
         dogViewModel.apiResponseStatus.observe(this) {
             when (it) {
-                ApiResponseStatus.LOADING -> {
-                    loadingWheel.visibility = View.VISIBLE
-                }
-                ApiResponseStatus.SUCCESS -> {
+                is ApiResponseStatus.Error -> {
                     loadingWheel.visibility = View.GONE
+                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                 }
-                ApiResponseStatus.ERROR -> {
-                    loadingWheel.visibility = View.GONE
-                    Toast.makeText(this, "Error al descargar", Toast.LENGTH_SHORT).show()
-                }
+                is ApiResponseStatus.Loading -> loadingWheel.visibility = View.VISIBLE
+                is ApiResponseStatus.Success -> loadingWheel.visibility = View.GONE
             }
         }
 

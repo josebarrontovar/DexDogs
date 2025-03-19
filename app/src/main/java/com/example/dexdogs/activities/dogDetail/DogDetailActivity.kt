@@ -5,6 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import coil.load
 import com.example.dexdogs.R
 import com.example.dexdogs.databinding.ActivityDogDetailBinding
 import com.example.dexdogs.model.Dog
@@ -27,7 +28,12 @@ class DogDetailActivity : AppCompatActivity() {
         }
         binding.dogIndex.text=getString(R.string.dog_index_format,dog.index)
         binding.lifeExpectancy.text=getString(R.string.dog_life_expectancy_format,dog.lifeExpectancy)
+        binding.dogImage.load(dog.imageUrl)
         binding.dog=dog
+
+        binding.closeButton.setOnClickListener{
+            finish()
+        }
 
 
     }

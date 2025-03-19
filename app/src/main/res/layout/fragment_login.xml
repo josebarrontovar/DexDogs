@@ -1,0 +1,67 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    tools:context=".auth.LoginActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_input"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="42dp"
+        android:layout_width="match_parent">
+
+        <EditText
+            android:autofillHints="emailAddress"
+            android:hint="Email"
+            android:id="@+id/email_edit"
+            android:inputType="textEmailAddress"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_input"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_width="match_parent">
+
+        <EditText
+            android:autofillHints="password"
+            android:hint="Password"
+            android:id="@+id/password_edit"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_width="match_parent"
+        android:text="Login" />
+
+    <TextView
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:text="No tienes cuenta?"
+        android:textColor="@color/text_black"
+        android:textSize="16sp" />
+
+    <Button
+        android:background="?attr/selectableItemBackground"
+        android:id="@+id/login_register_button"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:text="Registrate"
+        android:textColor="@color/text_black" />
+</LinearLayout></layout>

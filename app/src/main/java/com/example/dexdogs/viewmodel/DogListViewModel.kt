@@ -12,10 +12,10 @@ import kotlinx.coroutines.launch
 class DogListViewModel() : ViewModel() {
 
     private val _dogList = MutableLiveData<List<Dog>>()
-    val dogList: LiveData<List<Dog>> get()= _dogList
+    val dogList: LiveData<List<Dog>> get() = _dogList
 
-    private val _apiResponseStatus = MutableLiveData<ApiResponseStatus>()
-    val apiResponseStatus: LiveData<ApiResponseStatus> get()= _apiResponseStatus
+    private val _apiResponseStatus = MutableLiveData<ApiResponseStatus<List<Dog>>>()
+    val apiResponseStatus: LiveData<ApiResponseStatus<List<Dog>>> get() = _apiResponseStatus
 
 
     private val dogRepository = DogRepository()
@@ -27,13 +27,16 @@ class DogListViewModel() : ViewModel() {
 
     private fun downloadDogs() {
         viewModelScope.launch {
-            try{
-            _apiResponseStatus.value=ApiResponseStatus.LOADING
-            _dogList.value=dogRepository.downloadDogs()
-                _apiResponseStatus.value=ApiResponseStatus.SUCCESS
-            } catch (e: Exception){
-                _apiResponseStatus.value=ApiResponseStatus.ERROR
-            }
+            _apiResponseStatus.value = ApiResponseStatus.Loading()
+            handleResponseStatus(dogRepository.downloadDogs())
         }
+    }
+
+    private fun handleResponseStatus(downloadDogs: ApiResponseStatus<List<Dog>>) {
+        if (downloadDogs is ApiResponseStatus.Success) {
+            _dogList.value = downloadDogs.data
+        }
+        _apiResponseStatus.value = downloadDogs
+
     }
 }
