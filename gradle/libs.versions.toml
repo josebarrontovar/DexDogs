@@ -37,4 +37,5 @@ kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin"
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 navigation-safe-args = { id = "androidx.navigation.safeargs", version = "2.7.3" }
+hilt-plugin = { id = "dagger.hilt.android.plugin", version = "2.44" }
 

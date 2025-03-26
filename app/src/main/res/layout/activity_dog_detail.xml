@@ -6,7 +6,7 @@
 
         <variable
             name="dog"
-            type="com.example.dexdogs.model.Dog" />
+            type="com.example.dexdogs.domain.model.Dog" />
     </data>
 
     <FrameLayout

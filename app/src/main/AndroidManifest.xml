@@ -2,9 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
+        android:name=".ApplicationController"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,19 +20,20 @@
         android:theme="@style/Theme.DexDogs"
         tools:targetApi="31">
         <activity
-            android:name=".activities.settings.SettingsActivity"
+            android:name=".presentation.ui.settings.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.auth.LoginActivity"
+            android:name=".presentation.ui.auth.LoginActivity"
             android:exported="false"></activity>
         <activity
-            android:name=".activities.dogDetail.DogDetailActivity"
+            android:name=".presentation.ui.dogDetail.DogDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DogListActivity"
+            android:name=".presentation.ui.dogList.DogListActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false"></activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

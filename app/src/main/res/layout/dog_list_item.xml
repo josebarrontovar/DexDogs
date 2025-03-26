@@ -2,13 +2,30 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <!-- Puedes agregar variables de binding aquí si lo necesitas -->
     </data>
 
-    <TextView
-        android:id="@+id/dogName"
-        android:textColor="@android:color/holo_red_dark"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:padding="15dp"
-        android:layout_height="wrap_content"></TextView>
+        android:id="@+id/dogListItemLayout"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:id="@+id/dogImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/dogId"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:layout_marginBottom="8dp" />
+    </RelativeLayout>
+
+
 </layout>

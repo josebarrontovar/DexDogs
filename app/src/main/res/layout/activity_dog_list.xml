@@ -15,7 +15,7 @@
             android:id="@+id/dog_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".activities.DogListActivity" />
+            tools:context=".presentation.ui.dogList.DogListActivity" />
 
         <ProgressBar
             android:id="@+id/loading_wheel"
