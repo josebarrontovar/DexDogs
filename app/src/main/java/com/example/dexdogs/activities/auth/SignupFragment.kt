@@ -1,5 +1,6 @@
 package com.example.dexdogs.activities.auth
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,22 @@ import com.example.dexdogs.databinding.FragmentSignupBinding
 class SignupFragment : Fragment() {
 
     private lateinit var binding: FragmentSignupBinding
+
+    interface SignupFragmentListener {
+        fun onSingupFielsValidated(email:String,password:String, confirmPassword:String)
+    }
+
+    private lateinit var signupFragmentListener: SignupFragmentListener
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        signupFragmentListener = try {
+            context as SignupFragmentListener
+        } catch (e: ClassCastException) {
+            throw ClassCastException("$context must implement LoginFragmentListener")
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +55,7 @@ class SignupFragment : Fragment() {
         }
         val password = binding.passwordEdit.text.toString()
         if(!validatePassword(password)){
-            binding.passwordInput.error = "Password must be at least 5 characters"
+            binding.passwordInput.error = "Password must be at least 2 characters"
             return
         }
         val confirmPassword = binding.confirmPasswordEdit.text.toString()
@@ -50,11 +67,12 @@ class SignupFragment : Fragment() {
             binding.confirmPasswordInput.error = "Passwords do not match"
             return
         }
+        signupFragmentListener.onSingupFielsValidated(email,password,confirmPassword)
 
     }
 
     private fun validatePassword(password: String): Boolean {
-        return password.length > 5
+        return password.length > 2
     }
 
     private fun validateEmail(email:String?):Boolean{

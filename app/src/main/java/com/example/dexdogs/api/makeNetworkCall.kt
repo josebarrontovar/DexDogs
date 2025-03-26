@@ -13,7 +13,13 @@ suspend fun <T> makeNetworkCall(
         } catch (e: UnknownHostException) {
             ApiResponseStatus.Error("No hay conexión a internet")
         } catch (e: Exception) {
-            ApiResponseStatus.Error(e.message ?: "Error desconocido")
+            val errorMessage= when (e.message) {
+                "sign_up_error" -> "Error al crear la cuenta"
+                "sign_in_error" -> "Error al iniciar sesión"
+                "user_already_exists" -> "El usuario ya existe"
+                else -> "Error desconocido"
+            }
+            ApiResponseStatus.Error(errorMessage)
         }
     }
 }

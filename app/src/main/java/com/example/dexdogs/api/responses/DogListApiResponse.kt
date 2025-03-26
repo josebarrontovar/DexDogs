@@ -1,7 +1,6 @@
 package com.example.dexdogs.api.responses
 
 import com.squareup.moshi.Json
-import retrofit2.http.Field
 
 class DogListApiResponse(
     val message: String,
