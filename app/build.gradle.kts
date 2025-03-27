@@ -3,7 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
     alias(libs.plugins.navigation.safe.args)
-    kotlin("kapt")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -44,10 +45,8 @@ android {
 
 dependencies {
 
-    // Hilt dependencies
-    implementation("com.google.dagger:hilt-android:2.44") // Hilt core
-    kapt("com.google.dagger:hilt-android-compiler:2.44") // Hilt compiler
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -84,7 +83,6 @@ dependencies {
 
     implementation("com.github.chuckerteam.chucker:library:3.5.2") // Para release, no muestra logs
     debugImplementation("com.github.chuckerteam.chucker:library:3.5.2")
-
 
 
 }

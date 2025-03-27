@@ -7,9 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.dexdogs.data.remote.ApiResponseStatus
 import com.example.dexdogs.domain.model.Dog
 import com.example.dexdogs.domain.repository.DogRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DogListViewModel: ViewModel() {
+@HiltViewModel
+class DogListViewModel @Inject constructor(private val dogRepository: DogRepository) : ViewModel() {
 
     private val _dogList = MutableLiveData<List<Dog>>()
     val dogList: LiveData<List<Dog>> get() = _dogList
@@ -17,12 +20,8 @@ class DogListViewModel: ViewModel() {
     private val _apiResponseStatus = MutableLiveData<ApiResponseStatus<Any>>()
     val apiResponseStatus: LiveData<ApiResponseStatus<Any>> get() = _apiResponseStatus
 
-
-    private val dogRepository = DogRepository()
-
     init {
-      getDogsCollection()
-
+        getDogsCollection()
     }
 
     private fun getDogsCollection() {
@@ -32,7 +31,7 @@ class DogListViewModel: ViewModel() {
         }
     }
 
-    fun addDogToUser(dogId:Long){
+    fun addDogToUser(dogId: Long) {
         viewModelScope.launch {
             _apiResponseStatus.value = ApiResponseStatus.Loading()
             handleAddDogToUserResponseStatus(dogRepository.addDogToUser(dogId))
@@ -49,7 +48,7 @@ class DogListViewModel: ViewModel() {
 
     private fun handleAddDogToUserResponseStatus(downloadDogs: ApiResponseStatus<Any>) {
         if (downloadDogs is ApiResponseStatus.Success) {
-           getDogsCollection()
+            getDogsCollection()
         }
         _apiResponseStatus.value = downloadDogs
 

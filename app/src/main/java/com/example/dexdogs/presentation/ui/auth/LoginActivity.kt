@@ -12,7 +12,9 @@ import com.example.dexdogs.MainActivity
 import com.example.dexdogs.data.remote.ApiResponseStatus
 import com.example.dexdogs.databinding.ActivityLoginBinding
 import com.example.dexdogs.domain.model.User
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentListener,
     SignupFragment.SignupFragmentListener {
 

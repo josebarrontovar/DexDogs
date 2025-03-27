@@ -1,46 +1,33 @@
 package com.example.dexdogs.data.remote
 
-import com.chuckerteam.chucker.api.ChuckerCollector
-import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.example.dexdogs.ApplicationController
-import com.example.dexdogs.utils.BASE_URL
-import com.example.dexdogs.utils.GET_ALL_DOGS_URL
-import com.example.dexdogs.utils.SIGN_IN_URL
-import com.example.dexdogs.utils.SIGN_UP_URL
+import com.example.dexdogs.data.model.AddDogToUserDTO
 import com.example.dexdogs.data.model.LoginDTO
 import com.example.dexdogs.data.model.SingUpDTO
+import com.example.dexdogs.data.model.responses.DefaultResponse
 import com.example.dexdogs.data.model.responses.DogListApiResponse
 import com.example.dexdogs.data.model.responses.SignUpApiResponse
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import com.example.dexdogs.utils.*
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
+interface ApiService {
 
-private val okhttpClient = OkHttpClient.Builder()
-    .addInterceptor(
-        ChuckerInterceptor.Builder(ApplicationController.instance) // <-- Usa el contexto de tu app
-        .collector(ChuckerCollector(ApplicationController.instance))
-        .maxContentLength(250_000L)
-        .redactHeaders("Authorization", "Cookie") // Oculta datos sensibles
-        .alwaysReadResponseBody(true)
-        .build()
-    )
-    .addInterceptor(ApiServiceInterceptor) // Tu interceptor personalizado
-    .build()
+    @GET(GET_ALL_DOGS_URL)
+    suspend fun getAllDogs(): DogListApiResponse
+    @POST(SIGN_UP_URL)
+    suspend fun singUp(@Body singUpDTO: SingUpDTO): SignUpApiResponse
+    @POST(SIGN_IN_URL)
+    suspend fun singIn(@Body singUpDTO: LoginDTO): SignUpApiResponse
+    @POST(ADD_DOG_TO_USER)
+    suspend fun addDogToUser(
+        @Header("needs_authentication") needsAuthentication: String = "true",  // Encabezado
+        @Body addDogToUserDTO: AddDogToUserDTO  // Cuerpo
+    ): DefaultResponse
+
+    @GET(GET_USER_DOG)
+    suspend fun getUserDogs(@Header("needs_authentication") needsAuthentication: String = "true"): DogListApiResponse
 
 
-
-object ApiService {
-    private val retrofit = Retrofit.Builder()
-        .client(okhttpClient)
-        .baseUrl(BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create()) // Convierte JSON a objetos Kotlin
-        .build()
-
-    val retrofitService: IApiServices by lazy {
-        retrofit.create(IApiServices::class.java)
-    }
 }

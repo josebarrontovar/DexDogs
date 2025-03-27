@@ -7,18 +7,18 @@ import androidx.lifecycle.viewModelScope
 import com.example.dexdogs.data.remote.ApiResponseStatus
 import com.example.dexdogs.domain.model.User
 import com.example.dexdogs.domain.repository.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AuthViewModel : ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor(private val authRepository: AuthRepository) : ViewModel() {
 
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> get() = _user
 
     private val _apiResponseStatus = MutableLiveData<ApiResponseStatus<User>>()
     val apiResponseStatus: LiveData<ApiResponseStatus<User>> get() = _apiResponseStatus
-
-
-    private val authRepository = AuthRepository()
 
     fun singUp(email: String, password: String, confirmPassword: String) {
         viewModelScope.launch {

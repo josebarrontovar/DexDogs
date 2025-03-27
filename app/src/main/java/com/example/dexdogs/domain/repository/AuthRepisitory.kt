@@ -1,20 +1,21 @@
 package com.example.dexdogs.domain.repository
 
 import com.example.dexdogs.data.remote.ApiResponseStatus
-import com.example.dexdogs.data.remote.ApiService.retrofitService
 import com.example.dexdogs.data.model.LoginDTO
 import com.example.dexdogs.data.model.SingUpDTO
 import com.example.dexdogs.data.mapper.UserDTOMapper
+import com.example.dexdogs.data.remote.NetworkClient
 import com.example.dexdogs.data.remote.makeNetworkCall
 import com.example.dexdogs.domain.model.User
+import javax.inject.Inject
 
-class AuthRepository {
+class AuthRepository @Inject constructor(private val apiService: NetworkClient) {
 
     suspend fun singUp(email: String, password: String, confirmPassword: String)
     : ApiResponseStatus<User> {
         return makeNetworkCall {
             val signupDTO= SingUpDTO(email,password,confirmPassword)
-            val singUpResponse = retrofitService.singUp(signupDTO)
+            val singUpResponse = apiService.retrofitService.singUp(signupDTO)
             if(!singUpResponse.is_success){
                 throw Exception(singUpResponse.message)
             }
@@ -28,7 +29,7 @@ class AuthRepository {
             : ApiResponseStatus<User> {
         return makeNetworkCall {
             val loginDTO= LoginDTO(email,password)
-            val loginResponse = retrofitService.singIn(loginDTO)
+            val loginResponse = apiService.retrofitService.singIn(loginDTO)
             if(!loginResponse.is_success){
                 throw Exception(loginResponse.message)
             }

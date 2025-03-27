@@ -7,14 +7,15 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dexdogs.data.remote.ApiResponseStatus
+import com.example.dexdogs.databinding.ActivityDogListBinding
 import com.example.dexdogs.presentation.components.DogAdapter
 import com.example.dexdogs.presentation.ui.dogDetail.DogDetailActivity
 import com.example.dexdogs.presentation.ui.dogDetail.DogDetailActivity.Companion.DOG_EXTRA
-import com.example.dexdogs.data.remote.ApiResponseStatus
-import com.example.dexdogs.databinding.ActivityDogListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class DogListActivity : AppCompatActivity() {
 
     private val dogViewModel: DogListViewModel by viewModels()

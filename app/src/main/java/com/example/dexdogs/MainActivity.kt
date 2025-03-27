@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.dexdogs.data.remote.ApiServiceInterceptor
+import com.example.dexdogs.data.remote.AuthenticationInterceptor
 import com.example.dexdogs.presentation.ui.auth.LoginActivity
 import com.example.dexdogs.presentation.ui.settings.SettingsActivity
 import com.example.dexdogs.databinding.ActivityMainBinding
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else {
-            ApiServiceInterceptor.setSessionToken(user.authenticationToken)
+            AuthenticationInterceptor.setSessionToken(user.authenticationToken)
         }
 
         binding.settings.setOnClickListener {
