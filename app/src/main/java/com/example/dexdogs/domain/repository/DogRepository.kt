@@ -11,9 +11,18 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class DogRepository @Inject constructor(private val apiService: NetworkClient) {
 
-    suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
+
+interface DogTask {
+    suspend fun downloadDogs(): ApiResponseStatus<List<Dog>>
+    suspend fun addDogToUser(dogId: Long): ApiResponseStatus<Any>
+    suspend fun getUserDog(): ApiResponseStatus<List<Dog>>
+    suspend fun getDogCollection(): ApiResponseStatus<List<Dog>>
+}
+
+class DogRepository @Inject constructor(private val apiService: NetworkClient): DogTask {
+
+    override suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
         return withContext(Dispatchers.IO) {
             val dogListDeffered = async{downloadDogs()}
             val dogUserListDeffered = async {getUserDog()}
@@ -52,7 +61,7 @@ class DogRepository @Inject constructor(private val apiService: NetworkClient) {
     }
 
 
-    suspend fun downloadDogs(): ApiResponseStatus<List<Dog>> {
+    override suspend fun downloadDogs(): ApiResponseStatus<List<Dog>> {
         return makeNetworkCall {
             val dogList = apiService.retrofitService.getAllDogs()
             val dogDTOList = dogList.data.dogs
@@ -61,7 +70,7 @@ class DogRepository @Inject constructor(private val apiService: NetworkClient) {
         }
     }
 
-    suspend fun addDogToUser(dogId: Long): ApiResponseStatus<Any> {
+    override suspend fun addDogToUser(dogId: Long): ApiResponseStatus<Any> {
         return makeNetworkCall {
             val addDogToUserDto = AddDogToUserDTO(dogId)
             val defaultResponse = apiService.retrofitService.addDogToUser("true", addDogToUserDto)
@@ -71,7 +80,7 @@ class DogRepository @Inject constructor(private val apiService: NetworkClient) {
         }
     }
 
-    suspend fun getUserDog(): ApiResponseStatus<List<Dog>> {
+    override suspend fun getUserDog(): ApiResponseStatus<List<Dog>> {
         return makeNetworkCall {
             val dogList = apiService.retrofitService.getUserDogs()
             val dogDTOList = dogList.data.dogs

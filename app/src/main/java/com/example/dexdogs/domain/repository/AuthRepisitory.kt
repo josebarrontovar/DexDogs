@@ -9,9 +9,17 @@ import com.example.dexdogs.data.remote.makeNetworkCall
 import com.example.dexdogs.domain.model.User
 import javax.inject.Inject
 
-class AuthRepository @Inject constructor(private val apiService: NetworkClient) {
 
+interface AuthInferace {
     suspend fun singUp(email: String, password: String, confirmPassword: String)
+            : ApiResponseStatus<User>
+    suspend fun login(email: String, password: String)
+            : ApiResponseStatus<User>
+}
+
+class AuthRepository @Inject constructor(private val apiService: NetworkClient): AuthInferace {
+
+    override suspend fun singUp(email: String, password: String, confirmPassword: String)
     : ApiResponseStatus<User> {
         return makeNetworkCall {
             val signupDTO= SingUpDTO(email,password,confirmPassword)
@@ -25,7 +33,7 @@ class AuthRepository @Inject constructor(private val apiService: NetworkClient) 
         }
     }
 
-    suspend fun login(email: String, password: String)
+    override suspend fun login(email: String, password: String)
             : ApiResponseStatus<User> {
         return makeNetworkCall {
             val loginDTO= LoginDTO(email,password)

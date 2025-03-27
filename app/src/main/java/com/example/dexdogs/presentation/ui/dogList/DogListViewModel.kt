@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dexdogs.data.remote.ApiResponseStatus
 import com.example.dexdogs.domain.model.Dog
-import com.example.dexdogs.domain.repository.DogRepository
+import com.example.dexdogs.domain.repository.DogTask
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DogListViewModel @Inject constructor(private val dogRepository: DogRepository) : ViewModel() {
+class DogListViewModel @Inject constructor(private val dogRepository: DogTask) : ViewModel() {
 
     private val _dogList = MutableLiveData<List<Dog>>()
     val dogList: LiveData<List<Dog>> get() = _dogList
